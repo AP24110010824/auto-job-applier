@@ -47,7 +47,11 @@ function App() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/start', data, {
+      // Use environment variable if available, otherwise default to localhost:5000
+      // In a production environment with the routePrefix "/_/backend", this allows flexibility
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      
+      const response = await axios.post(`${apiUrl}/api/start`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -64,7 +68,8 @@ function App() {
 
   const handleStop = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/stop');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await axios.post(`${apiUrl}/api/stop`);
       setStatus('Stopped');
       setIsLoading(false);
       addLog(response.data.message, 'warning');
