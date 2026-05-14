@@ -8,7 +8,7 @@ let globalBrowser = null;
 async function runScraper(username, password, keywords) {
     console.log("Launching Puppeteer...");
     const browser = await puppeteer.launch({
-        headless: false, // Keep it visible for now so we can debug, linkedin often asks for captchas
+        headless: true, // MUST be true on a cloud server like Render
         args: ['--no-sandbox', '--disable-setuid-sandbox', '--window-size=1280,800']
     });
     globalBrowser = browser;
